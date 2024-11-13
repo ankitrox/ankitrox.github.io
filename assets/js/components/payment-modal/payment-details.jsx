@@ -1,20 +1,31 @@
 /**
  * External dependencies
  */
-import { useState } from 'react';
-import { Modal } from "@wordpress/components";
-import Form from './form';
+import { useEffect } from 'react';
+import { Modal, Spinner } from "@wordpress/components";
 import usePayment from '../../hooks/usePayment';
+import Form from './form';
 
 const PaymentDetails = ({ onClose = () => {} }) => {
-    const [processing, setProcessing] = useState( false );
-    const { doPayment } = usePayment();
+    const { doPayment, resetPaymentsStatus, status } = usePayment();
+    const { initiated, processing, success: paymentSucceeded } = status;
 
-    const initiatePayment = async (formData) => {
-        setProcessing( true );
-        await doPayment( formData );
-        setProcessing( false );
-    };
+    const paymentsYetToBeMade = ! initiated && ! processing;
+    const paymentProcessing = initiated && processing;
+
+    useEffect(() => {
+        let timer;
+
+        if (paymentSucceeded) {
+            timer = setTimeout(() => {
+                onClose();
+                resetPaymentsStatus();
+            }, 0);
+        }
+
+        // Cleanup to clear any pending timer when component unmounts
+        return () => clearTimeout(timer);
+    }, [paymentSucceeded, onClose, resetPaymentsStatus]);
 
     return (
         <Modal
@@ -22,12 +33,13 @@ const PaymentDetails = ({ onClose = () => {} }) => {
             onRequestClose={onClose}
             size={ 'medium' }
         >
-            { ! processing && 
+            { paymentsYetToBeMade && 
                 <Form
                     onClose={ onClose }
-                    initiatePayment={ initiatePayment }
+                    initiatePayment={ doPayment }
                 />
             }
+            { paymentProcessing && <Spinner /> }
         </Modal>
     );
 };

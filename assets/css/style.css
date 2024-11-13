@@ -79,6 +79,14 @@
   background-color: black;
 }
 
+.money {
+  background-color: #444444;
+}
+
+.money:hover {
+  background-color: #2e6d48;
+}
+
 /* Buttons - Read Me, Contact Us */
 
 .readme {

@@ -1,8 +1,21 @@
+import { useState } from 'react';
 import { CREATE_TOKEN_PATH } from "../constants";
 
 export default function usePayment () {
+    const [status, setStatus] = useState( {
+        initiated: false,
+        processing: false,
+        success: false,
+    } );
+
     const doPayment = async (formData) => {
         try {
+            setStatus({
+                ...status,
+                initiated: true,
+                processing: true,
+            });
+
             const response = await fetch( CREATE_TOKEN_PATH, {
                 method: 'POST',
                 headers: {
@@ -22,13 +35,43 @@ export default function usePayment () {
                     redirectTarget: "_modal",
                 });
 
-            } else {
-                alert('Payment failed');
+                console.log('result', result);
+
+                if ( result.error ) {
+                    setStatus({
+                        ...status,
+                        processing: false,
+                    });
+                }
+
+                if( result.paymentDetails ) {
+                    setStatus({
+                        ...status,
+                        processing: false,
+                        success: true,
+                    });
+                }
             }
         } catch (error) {
-            alert('Payment failed');
+            console.error( error );
+            setStatus({
+                ...status,
+                processing: false,
+            });
         }
-    }
+    };
 
-    return { doPayment };
+    const resetPaymentsStatus = () => {
+        setStatus({
+            initiated: false,
+            processing: false,
+            success: false,
+        });
+    };
+
+    return {
+        doPayment,
+        resetPaymentsStatus,
+        status,
+    };
 };

@@ -22,6 +22,7 @@ export default function Form({ initiatePayment, onClose }) {
                 onChange={
                     (name) => setFormData({ ...formData, name })
                 }
+                required
             />
             <TextControl
                 label="Amount"
@@ -32,6 +33,7 @@ export default function Form({ initiatePayment, onClose }) {
                 onChange={
                     (amount) => setFormData({ ...formData, amount })
                 }
+                required
             />
             <TextControl
                 label="Email"
@@ -42,6 +44,7 @@ export default function Form({ initiatePayment, onClose }) {
                 onChange={
                     (email) => setFormData({ ...formData, email })
                 }
+                required
             />
             <TextControl
                 label="Phone Number"
@@ -54,13 +57,16 @@ export default function Form({ initiatePayment, onClose }) {
                 onChange={
                     (phone) => setFormData({ ...formData, phone })
                 }
+                required
             />
             <Flex
                 gap="4"
                 justify="flex-start"
             >
                 <Button variant="secondary" onClick={ onClose }>Cancel</Button>
-                <Button variant="primary" onClick={ initiatePayment}>Make Payment</Button>
+                <Button variant="primary" onClick={ () => {
+                    initiatePayment( formData );
+                } }>Make Payment</Button>
             </Flex>
         </>
     );

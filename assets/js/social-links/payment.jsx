@@ -15,9 +15,9 @@ const Payment = () => {
 
     return (
         <>
-            <a href="#" target="_blank" key="github">
-                <button onClick={onClick} className="icon-btn paypal">
-                    <i className="fa fa-paypal"></i>
+            <a href="#" title="Make a payment" target="_blank" key="payment">
+                <button onClick={onClick} className="icon-btn money">
+                    <i className="fa fa-cc-visa"></i>
                 </button>
             </a>
 
