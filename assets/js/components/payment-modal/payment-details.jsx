@@ -1,45 +1,34 @@
 /**
  * External dependencies
  */
-import { useEffect } from 'react';
-import { Modal, Spinner } from "@wordpress/components";
-import usePayment from '../../hooks/usePayment';
-import Form from './form';
+import React from 'react';
+import { Modal } from "@wordpress/components";
+import PaymentForm from './payment-form';
+import PaymentSuccess from './payment-success';
+import { PaymentContext } from '../PaymentProvider';
 
 const PaymentDetails = ({ onClose = () => {} }) => {
-    const { doPayment, resetPaymentsStatus, status } = usePayment();
-    const { initiated, processing, success: paymentSucceeded } = status;
+    const { processing, resetPaymentsStatus, success } = React.useContext(PaymentContext);
 
-    const paymentsYetToBeMade = ! initiated && ! processing;
-    const paymentProcessing = initiated && processing;
+    const onModalClose = () => {
+        resetPaymentsStatus();
+        onClose();
+    };
 
-    useEffect(() => {
-        let timer;
-
-        if (paymentSucceeded) {
-            timer = setTimeout(() => {
-                onClose();
-                resetPaymentsStatus();
-            }, 0);
-        }
-
-        // Cleanup to clear any pending timer when component unmounts
-        return () => clearTimeout(timer);
-    }, [paymentSucceeded, onClose, resetPaymentsStatus]);
+    const modalTitle = processing ? 'Initiating Payment...' : 'Payment Details';
 
     return (
         <Modal
-            title="Payment"
-            onRequestClose={onClose}
+            title={ ! success ? modalTitle : null }
+            onRequestClose={ onModalClose }
             size={ 'medium' }
+            focusOnMount={ true }
+            isDismissible={ success }
+            shouldCloseOnEsc={ false }
+            shouldCloseOnClickOutside={ success }
         >
-            { paymentsYetToBeMade && 
-                <Form
-                    onClose={ onClose }
-                    initiatePayment={ doPayment }
-                />
-            }
-            { paymentProcessing && <Spinner /> }
+            <PaymentForm onClose={ onModalClose } />
+            { success && <PaymentSuccess /> }
         </Modal>
     );
 };

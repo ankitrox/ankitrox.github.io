@@ -1,17 +1,21 @@
 import { useState } from 'react';
 import { CREATE_TOKEN_PATH } from "../constants";
 
+const defaultStatus = {
+    initiated: false,
+    processing: false,
+    success: false,
+    error: undefined,
+};
+
 export default function usePayment () {
-    const [status, setStatus] = useState( {
-        initiated: false,
-        processing: false,
-        success: false,
-    } );
+    const [status, setStatus] = useState( defaultStatus );
+    const { initiated, processing, success, error } = status;
 
     const doPayment = async (formData) => {
         try {
             setStatus({
-                ...status,
+                ...defaultStatus,
                 initiated: true,
                 processing: true,
             });
@@ -35,12 +39,11 @@ export default function usePayment () {
                     redirectTarget: "_modal",
                 });
 
-                console.log('result', result);
-
                 if ( result.error ) {
                     setStatus({
                         ...status,
                         processing: false,
+                        error: result.error,
                     });
                 }
 
@@ -53,25 +56,23 @@ export default function usePayment () {
                 }
             }
         } catch (error) {
-            console.error( error );
             setStatus({
                 ...status,
                 processing: false,
+                error: error,
             });
         }
     };
 
     const resetPaymentsStatus = () => {
-        setStatus({
-            initiated: false,
-            processing: false,
-            success: false,
-        });
+        setStatus( defaultStatus );
     };
 
     return {
         doPayment,
         resetPaymentsStatus,
-        status,
+        processing: initiated && processing,
+        success,
+        error
     };
 };

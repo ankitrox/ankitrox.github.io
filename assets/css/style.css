@@ -320,6 +320,18 @@ h3 {
   height: 100vh;
 }
 
+.payment-success {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+}
+
+.payment-success .payment-success__icon {
+  color: green;
+  font-size: 2em;
+  display: block;
+}
+
 /* Original */
 
 /* #intro.section {

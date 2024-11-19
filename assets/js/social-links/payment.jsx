@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 import { PaymentDetails } from "../components/payment-modal";
+import PaymentProvider from '../components/PaymentProvider';
+
 
 const Payment = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -14,7 +16,7 @@ const Payment = () => {
     };
 
     return (
-        <>
+        <PaymentProvider>
             <a href="#" title="Make a payment" target="_blank" key="payment">
                 <button onClick={onClick} className="icon-btn money">
                     <i className="fa fa-cc-visa"></i>
@@ -22,7 +24,7 @@ const Payment = () => {
             </a>
 
             {isOpen && <PaymentDetails onClose={ onClose } /> }
-        </>
+        </PaymentProvider>
     );
 };
 
