@@ -562,6 +562,22 @@ small {
   display: none;
 }
 
+footer {
+  display: flex;
+  justify-content: space-around;
+  background: rgb(0, 128, 115);
+  color: #FFFFFF;
+}
+
+#website-links {
+  display: flex;
+  gap: 20px;
+}
+
+footer a {
+  color: #FFFFFF;
+}
+
 .grey-text {
   color: #666 !important;
 }
@@ -580,6 +596,10 @@ small {
 
 .teal {
   background-color: #008073 !important;
+}
+
+.terms-list li {
+  list-style: square;
 }
 
 /* .teal {
