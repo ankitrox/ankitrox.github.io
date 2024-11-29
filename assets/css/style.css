@@ -598,8 +598,16 @@ footer a {
   background-color: #008073 !important;
 }
 
-.terms-list li {
+.bulleted-list li {
   list-style: square;
+}
+
+.services-list > li {
+  margin-top: 15px;
+}
+
+.services-list > li > ul {
+  margin-left: 10px;
 }
 
 /* .teal {
