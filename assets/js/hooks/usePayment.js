@@ -31,7 +31,7 @@ export default function usePayment () {
             if (response.ok) {
                 const data = await response.json();
                 const cashfree = Cashfree({
-                    mode:"sandbox" //or production
+                    mode:"production"
                 });
 
                 const result = await cashfree.checkout({
