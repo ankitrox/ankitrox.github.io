@@ -1,2 +1,4 @@
 node_modules
 cashfree-payments
+.vite
+dist
