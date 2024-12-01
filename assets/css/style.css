@@ -614,6 +614,19 @@ footer a {
   background-color: #00695c !important;
 } */
 
+@media(max-width: 1024px) {
+  footer {
+    display: block;
+    text-align: center;
+    padding: 10px 0;
+    margin: 20px 0 0 0;
+  }
+
+  #website-links {
+    display: block;
+  }
+}
+
 @media (min-width: 1200px) {
   #experience .container {
     width: 860px;
