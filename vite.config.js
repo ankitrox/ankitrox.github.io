@@ -1,8 +1,25 @@
 import { defineConfig } from 'vite';
+import { resolve } from 'path';
+import { writeFileSync } from 'fs';
 import react from '@vitejs/plugin-react';
 
+// Add a custom plugin to ensure CNAME is added to dist
+const addCNAMEPlugin = () => {
+  return {
+    name: 'add-cname',
+    closeBundle() {
+      const cnamePath = resolve(__dirname, 'dist', 'CNAME');
+      writeFileSync(cnamePath, 'ankitgade.in');
+      console.log('CNAME file created!');
+    },
+  };
+};
+
 export default defineConfig({
-  plugins: [react()],
+  plugins: [
+    react(),
+    addCNAMEPlugin(),
+  ],
   build: {
     rollupOptions: {
       input: {
