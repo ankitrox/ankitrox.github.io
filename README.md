@@ -1,5 +1,5 @@
 # Personal Portfolio ⚡️ 
-> A clean, beautiful, responsive portfolio template for Software Developers!
+> A clean, beautiful, responsive portfolio template for personal portfolio!
 
 > https://ankitrox.github.io
 
@@ -9,6 +9,14 @@
 [![Website shields.io](https://img.shields.io/badge/website-up-yellow)](http://ankitrox.github.io/)
 [![Ask Me Anything !](https://img.shields.io/badge/ask%20me-linkedin-1abc9c.svg)](https://www.linkedin.com/in/ankitgade/)
 [![License](http://img.shields.io/:license-mit-blue.svg?style=flat-square)](http://badges.mit-license.org)
+
+### Website Preview
+<p align="center"> 
+  <kbd>
+    <a href="https://ankitgade.in" target="_blank"><img src="assets/img/website-preview.jpg">
+  </a>
+  </kbd>
+</p>
 
 ## Features 📋
 ⚡️ Fully Responsive\
