@@ -79,6 +79,14 @@
   background-color: black;
 }
 
+.money {
+  background-color: #444444;
+}
+
+.money:hover {
+  background-color: #2e6d48;
+}
+
 /* Buttons - Read Me, Contact Us */
 
 .readme {
@@ -312,6 +320,18 @@ h3 {
   height: 100vh;
 }
 
+.payment-success {
+  display: flex;
+  text-align: center;
+  flex-direction: column;
+}
+
+.payment-success .payment-success__icon {
+  color: green;
+  font-size: 2em;
+  display: block;
+}
+
 /* Original */
 
 /* #intro.section {
@@ -542,6 +562,22 @@ small {
   display: none;
 }
 
+footer {
+  display: flex;
+  justify-content: space-around;
+  background: rgb(0, 128, 115);
+  color: #FFFFFF;
+}
+
+#website-links {
+  display: flex;
+  gap: 20px;
+}
+
+footer a {
+  color: #FFFFFF;
+}
+
 .grey-text {
   color: #666 !important;
 }
@@ -562,9 +598,34 @@ small {
   background-color: #008073 !important;
 }
 
+.bulleted-list li {
+  list-style: square;
+}
+
+.services-list > li {
+  margin-top: 15px;
+}
+
+.services-list > li > ul {
+  margin-left: 10px;
+}
+
 /* .teal {
   background-color: #00695c !important;
 } */
+
+@media(max-width: 1024px) {
+  footer {
+    display: block;
+    text-align: center;
+    padding: 10px 0;
+    margin: 20px 0 0 0;
+  }
+
+  #website-links {
+    display: block;
+  }
+}
 
 @media (min-width: 1200px) {
   #experience .container {
