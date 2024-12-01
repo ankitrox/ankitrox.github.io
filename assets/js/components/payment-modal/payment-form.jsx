@@ -35,15 +35,6 @@ export default function PaymentForm({ onClose }) {
         return 'Payment failed. Please try again.';
     };
 
-    const magicFill = () => {
-        setFormData({
-            name: 'John Doe',
-            email: 'johndoe@example.com',
-            phone: '9876543210',
-            amount: '10',
-        });
-    };
-
     return (
         <>
             { error && 
@@ -110,7 +101,6 @@ export default function PaymentForm({ onClose }) {
                 <Button variant="primary" onClick={ () => {
                     initiatePayment( formData );
                 } }>Make Payment</Button>
-                <Button onClick={ magicFill }>Magic Fill</Button>
             </Flex>
         </>
     );
