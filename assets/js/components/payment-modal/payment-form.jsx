@@ -1,6 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TextControl, Button, Flex, Notice, Spinner, __experimentalSpacer as Spacer } from "@wordpress/components";
 import { PaymentContext } from '../PaymentProvider';
+import { validatePaymentForm } from '../../utils/validations';
 
 const defaultState = {
     name: '',
@@ -10,8 +11,15 @@ const defaultState = {
 };
 
 export default function PaymentForm({ onClose }) {
-    const { processing, success, error, doPayment: initiatePayment } = React.useContext(PaymentContext);
-    const [formData, setFormData] = useState( defaultState );
+    const { processing, success, error:  paymentError, doPayment } = React.useContext(PaymentContext);
+    const [ errors, setErrors ] = useState( paymentError );
+    const [ formData, setFormData ] = useState( defaultState );
+
+    // Add the form data if it is present in localStorage.
+    useEffect(() => {
+        const paymentFormData = localStorage.getItem( 'paymentFormData' );
+        setFormData( paymentFormData ? JSON.parse( paymentFormData ) : defaultState );
+    } , []);
 
     if( success ) {
         return null;
@@ -28,16 +36,35 @@ export default function PaymentForm({ onClose }) {
             'failed_payment_error',
         ];
 
-        if ( showErrorMessagesForErrorType.includes( error?.type ) ){
-            return error.message;
+        if ( showErrorMessagesForErrorType.includes( errors?.type ) ){
+            return errors.message;
         }
 
         return 'Payment failed. Please try again.';
     };
 
+    const initiatePayment = (formData) => {
+        const validations = validatePaymentForm( formData );
+
+        console.log( validations );
+
+        if ( validations ) {
+            setErrors( {
+                type: 'validation_error',
+                message: validations.message,
+            } );
+            return;
+        }
+
+        // Set the formData in localStorage so that it can be accessed in the payment modal.
+        localStorage.setItem( 'paymentFormData', JSON.stringify( formData ) );
+
+        doPayment( formData );
+    };
+
     return (
         <>
-            { error && 
+            { errors && 
                 (
                     <>
                         <Notice status="error" isDismissible={ false }>
