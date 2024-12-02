@@ -46,8 +46,6 @@ export default function PaymentForm({ onClose }) {
     const initiatePayment = (formData) => {
         const validations = validatePaymentForm( formData );
 
-        console.log( validations );
-
         if ( validations ) {
             setErrors( {
                 type: 'validation_error',

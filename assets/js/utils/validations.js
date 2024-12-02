@@ -40,8 +40,8 @@ export function validateEmail(email) {
  * @returns {object} The validation result.
  */
 export function validatePhoneNumber(phone) {
-    // Indian phone number validation: 10 digits, optionally starting with 0
-    const phoneRegex = /^0?[6-9]\d{9}$/;
+    // Indian phone number validation: 10 digits.
+    const phoneRegex = /^[6-9]\d{9}$/;
     const isValid = phoneRegex.test(phone);
 
     return isValid;
@@ -68,15 +68,15 @@ export const validatePaymentForm = (formData) => {
     const { name, email, phone, amount } = formData;
 
     if ( ! validateName( name ) ) {
-        return new Error( 'Invalid Name. Please enter the correct name.' );
+        return new Error( 'Invalid Name.' );
     }
 
     if ( ! validateEmail( email ) ) {
-        return new Error( 'Invalid Email. Please enter the correct email.' );
+        return new Error( 'Invalid Email.' );
     }
 
     if ( ! validatePhoneNumber( phone ) ) {
-        return new Error( 'Phone number should be the 10 digit, may contain leading zero.' );
+        return new Error( 'Invalid phone number.' );
     }
 
     if ( ! validateAmount( amount ) ) {
